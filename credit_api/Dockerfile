@@ -16,11 +16,17 @@
 # and various os-level packages to allow installation of popular Python
 # libraries. The source is on github at:
 #   https://github.com/GoogleCloudPlatform/python-docker
-FROM gcr.io/google_appengine/python
+# FROM gcr.io/google_appengine/python
+FROM python:3.6
+LABEL maintainer="hadoe-api"
+
+RUN apt-get update && apt-get install -y libpq5
+RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade virtualenv
 
 # Create a virtualenv for the application dependencies.
 # If you want to use Python 3, add the -p python3.4 flag.
-RUN virtualenv /env
+RUN virtualenv -p python3 /env
 
 # Set virtualenv environment variables. This is equivalent to running
 # source /env/bin/activate. This ensures the application is executed within
@@ -30,10 +36,10 @@ ENV PATH /env/bin:$PATH
 
 # Install dependencies.
 ADD requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Uncomment the following line to use NODB
-# NODB will use SQLite and in-memory cache insstead of Postgres And Redis
+# NODB will use SQLite and in-memory cache instead of Postgres And Redis
 # This is useful to test the rest of the Django setup without configuring the database/cache
 # Comment it out and rebuild this image once you have Postgres and Redis services in your cluster
 # ENV NODB 1

@@ -17,12 +17,10 @@ GOOGLE_CLOUD_PROJECT:=$(shell gcloud config list project --format="value(core.pr
 .PHONY: build
 build:
 	docker build -t eu.gcr.io/$(GOOGLE_CLOUD_PROJECT)/api:v9 .
-	docker build -t eu.gcr.io/$(GOOGLE_CLOUD_PROJECT)/frontend .
 
 .PHONY: push
 push: build
 	gcloud docker -- push eu.gcr.io/$(GOOGLE_CLOUD_PROJECT)/api:v9
-	gcloud docker -- push eu.gcr.io/$(GOOGLE_CLOUD_PROJECT)/frontend
 
 .PHONY: delete
 delete:
