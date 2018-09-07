@@ -67,7 +67,7 @@ Compute, Datastore, Pub/Sub, Storage, and Logging. Note: enabling the APIs can t
 
 1. `cd` into the application folder (api/credit_api)
 
-1. Run ```pip install -r requirements.tx```
+1. Run ```pip install -r requirements.txt```
 
 1. Run ```export NODB=1```
 

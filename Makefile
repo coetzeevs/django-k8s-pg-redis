@@ -27,7 +27,7 @@ all: deploy
 
 .PHONY: create-cluster
 create-cluster:
-	gcloud container clusters create api --scopes "https://www.googleapis.com/auth/userinfo.email","cloud-platform" --num-nodes=$(MIN)
+	gcloud container clusters create api --scopes "https://www.googleapis.com/auth/userinfo.email","cloud-platform" --machine-type=n1-standard-4 --num-nodes=$(MIN)
 	gcloud container clusters get-credentials api
 
 .PHONY: create-bucket
@@ -82,5 +82,5 @@ redis:
 
 .PHONY: delete
 delete:
-	gcloud container clusters delete api
-	gcloud compute disks delete pg-data
+	gcloud container clusters delete api -y
+	gcloud compute disks delete pg-data -y
