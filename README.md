@@ -109,3 +109,5 @@ Check error logs on console.google.cloud
 - [ ] Resolve frontend replica controllers that are missing. 
 - [ ] Copy and adapt api_gke.yaml.jinja file --> frontend_gke.yaml.jijna + load_test_gke.yaml.jinja, using the .yaml.tmpl file contents for each respective file. 
 - [ ] Check that everything is actually deploying as expected and that the application is accessible from a browser/curl command.
+- [ ] Fix Django version issue on cluster-frontend
+

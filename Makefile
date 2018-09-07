@@ -82,5 +82,5 @@ redis:
 
 .PHONY: delete
 delete:
-	gcloud container clusters delete api -y
-	gcloud compute disks delete pg-data -y
+	gcloud container clusters delete api
+	gcloud compute disks delete pg-data

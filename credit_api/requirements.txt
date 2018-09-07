@@ -13,11 +13,12 @@
 # limitations under the License
 
 
-Django
-django-redis-cache
-djangorestframework
-gunicorn
-hiredis
-psycopg2
-redis
-wheel
+Django==2.1.1
+django-redis-cache==1.7.1
+djangorestframework==3.8.2
+gunicorn==19.9.0
+hiredis==0.2.0
+psycopg2==2.7.5
+pytz==2018.5
+redis==2.10.6
+wheel==0.31.1
