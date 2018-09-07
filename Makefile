@@ -43,6 +43,8 @@ template:
 	# GKE templates
 	jinja2 kubernetes_configs/api/api.yaml.jinja gke_jinja.json --format=json > kubernetes_configs/api/api_gke.yaml
 	jinja2 kubernetes_configs/postgres/postgres.yaml.jinja gke_jinja.json --format=json > kubernetes_configs/postgres/postgres_gke.yaml
+	jinja2 kubernetes_configs/frontend/frontend_gke.yaml.jinja gke_jinja.json --format=json > kubernetes_configs/frontend/frontend_gke.yaml
+	jinja2 kubernetes_configs/load_test/load_test_gke.yaml.jinja gke_jinja.json --format=json > kubernetes_configs/load_test/load_test_gke.yaml
 
 .PHONY: deploy
 deploy: 

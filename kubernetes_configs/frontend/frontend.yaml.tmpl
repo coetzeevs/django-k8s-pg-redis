@@ -12,33 +12,51 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 
-apiVersion: extensions/v1beta1
-kind: Deployment
+# This file configures the guestbook application . The frontend serves
+# public web traffic.
+
+# For more info about Pods see:
+#   https://cloud.google.com/container-engine/docs/pods/
+# For more info about Replication Controllers:
+#   https://cloud.google.com/container-engine/docs/replicationcontrollers/
+
+apiVersion: v1
+kind: ReplicationController
 metadata:
-  name: api
+  name: frontend
   labels:
-    name: api
+    name: frontend
 spec:
   replicas: 3
   template:
     metadata:
       labels:
-        name: api
+        name: frontend
     spec:
       containers:
-      - name: api
-        image: eu.gcr.io/paywellcreditapi/api:v9
+      - name: guestbook
+        # Replace with your project ID or use `make template`
+        image: eu.gcr.io/$GCLOUD_PROJECT/api
+
+        # This setting makes nodes pull the docker image every time before
+        # starting the pod. This is useful when debugging, but should be turned
+        # off in production.
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
+
+        # Mounts the secret volume under /etc/secrets. We're not using this when NODB is set.
         volumeMounts:
         - name: secrets
           mountPath: /etc/secrets
           readOnly: true
+
+      # The secret to use. (In our case it will appear as the file /etc/secrets/djangouserpw)
       volumes:
       - name: secrets
         secret:
           secretName: db-passwords
-      
+
 ---
 
 # The polls service provides a load-balancing proxy over the polls app
@@ -51,13 +69,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api
+  name: frontend
   labels:
-    name: api
+    name: frontend
 spec:
   type: LoadBalancer
   ports:
   - port: 80
     targetPort: 8080
   selector:
-    name: api
+    name: frontend

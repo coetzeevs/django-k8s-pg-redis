@@ -13,21 +13,22 @@
 # limitations under the License
 
 apiVersion: extensions/v1beta1
-kind: Deployment
+kind: ReplicationController
 metadata:
-  name: api
+  name: load
   labels:
-    name: api
+    name: load
 spec:
   replicas: 3
   template:
     metadata:
       labels:
-        name: api
+        name: load
     spec:
       containers:
-      - name: api
-        image: eu.gcr.io/paywellcreditapi/api:v9
+      - name: load
+        image: eu.gcr.io/paywellcreditapi/load
+        
         ports:
         - containerPort: 8080
         volumeMounts:
@@ -40,24 +41,3 @@ spec:
           secretName: db-passwords
       
 ---
-
-# The polls service provides a load-balancing proxy over the polls app
-# pods. By specifying the type as a 'LoadBalancer', Container Engine will
-# create an external HTTP load balancer.
-# For more information about Services see:
-#   https://cloud.google.com/container-engine/docs/services/
-# For more information about external HTTP load balancing see:
-#   https://cloud.google.com/container-engine/docs/load-balancer
-apiVersion: v1
-kind: Service
-metadata:
-  name: api
-  labels:
-    name: api
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    targetPort: 8080
-  selector:
-    name: api

@@ -66,13 +66,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: loadbalancer-api
+  name: api
   labels:
-    name: loadbalancer-api
+    name: api
 spec:
   type: LoadBalancer
   ports:
   - port: 80
     targetPort: 8080
   selector:
-    name: loadbalancer-api
+    name: api

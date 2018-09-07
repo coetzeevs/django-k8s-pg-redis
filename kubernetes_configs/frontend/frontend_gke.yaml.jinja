@@ -13,32 +13,47 @@
 # limitations under the License
 
 apiVersion: extensions/v1beta1
-kind: Deployment
+kind: ReplicationController
 metadata:
-  name: api
+  name: frontend
   labels:
-    name: api
+    name: frontend
 spec:
   replicas: 3
   template:
     metadata:
       labels:
-        name: api
+        name: frontend
     spec:
       containers:
-      - name: api
-        image: eu.gcr.io/paywellcreditapi/api:v9
+      - name: frontend
+        image: eu.gcr.io/{{ GOOGLE_CLOUD_PROJECT }}/api:{{- api_tag -}}
+        {% if minikube %}
+        imagePullPolicy: IfNotPresent
+       {%- endif %}
         ports:
         - containerPort: 8080
         volumeMounts:
+        {% if has_db -%}
         - name: secrets
           mountPath: /etc/secrets
           readOnly: true
+        {%- endif -%}
+      {% if hot_reload %}
+        - name: reload
+          mountPath: /app
+      {%- endif %}
       volumes:
+      {%- if has_db %}
       - name: secrets
         secret:
           secretName: db-passwords
-      
+      {% endif %}
+      {%-if hot_reload -%}
+      - name: reload
+        hostPath:
+          path: {{ hotreload_directory }}
+      {% endif %}
 ---
 
 # The polls service provides a load-balancing proxy over the polls app
@@ -51,13 +66,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api
+  name: frontend
   labels:
-    name: api
+    name: frontend
 spec:
   type: LoadBalancer
   ports:
   - port: 80
     targetPort: 8080
   selector:
-    name: api
+    name: frontend
