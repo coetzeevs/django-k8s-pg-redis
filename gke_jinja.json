@@ -1,0 +1,9 @@
+{
+  "GOOGLE_CLOUD_PROJECT" : "paywellcreditapi",
+  "minikube": null,
+  "api_tag": "v9",
+  "base64_db_pw": "bXlzZWNyZXRwYXNzd29yZAo=",
+  "gce_disk_name": "pg-data",
+  "has_db": "True",
+  "hot_reload": null
+}
