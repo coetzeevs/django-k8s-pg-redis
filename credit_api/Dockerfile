@@ -36,7 +36,7 @@ ENV PATH /env/bin:$PATH
 
 # Install dependencies.
 ADD requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN pip3 install --no-cache-dir -r /app/requirements.txt
 
 # Uncomment the following line to use NODB
 # NODB will use SQLite and in-memory cache instead of Postgres And Redis

@@ -20,7 +20,7 @@ MIN=2
 MAX=15
 TARGET=50
 DEPLOYMENT=api
-API_POD_NAME=$(shell kubectl get pods | grep api -m 1 | awk '{print $$1}' )
+FRONTEND_POD_NAME=$(shell kubectl get pods | grep frontend -m 1 | awk '{print $$1}' )
 
 .PHONY: all
 all: deploy
@@ -48,7 +48,7 @@ template:
 
 .PHONY: deploy
 deploy: 
-	kubectl apply -f kubernetes_configs/api/api-gke.yaml
+	kubectl apply -f kubernetes_configs/api/api_gke.yaml
 
 .PHONY: update
 update:
@@ -74,11 +74,24 @@ autoscale-on:
 
 .PHONY: migrations
 migrations:
-	kubectl exec $(API_POD_NAME) -- python /app/manage.py migrate
+	kubectl exec $(FRONTEND_POD_NAME) -- python3 /app/manage.py makemigrations
+	kubectl exec $(FRONTEND_POD_NAME) -- python3 /app/manage.py migrate
 
 .PHONY: redis
 redis:
 	kubectl apply -f kubernetes_configs/redis/redis.yaml
+
+.PHONY: postgres
+postgres:
+	kubectl apply -f kubernetes_configs/postgres/postgres_gke.yaml
+
+.PHONY: load
+load:
+	kubectl apply -f kubernetes_configs/load_test/load_test_gke.yaml
+
+.PHONY: frontend
+frontend:
+	kubectl apply -f kubernetes_configs/frontend/frontend_gke.yaml
 
 .PHONY: delete
 delete:
