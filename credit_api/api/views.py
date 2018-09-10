@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 class CreateView(generics.ListCreateAPIView):
-    """This class handles the GET and POSt requests of our rest api."""
+    """This class handles the GET and POST requests of our rest api."""
 
     queryset = Bucketlist.objects.all()
     serializer_class = BucketlistSerializer

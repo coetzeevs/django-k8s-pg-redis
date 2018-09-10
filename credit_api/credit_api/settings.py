@@ -24,7 +24,7 @@ SECRET_KEY = 'qfff)c+!oh9uhu)wg&#0(wiyqtwt5)kzbkc)y_@*k_zmr=r_+l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'credit_api.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -100,7 +100,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'guestbook',
+            'NAME': 'api',
             'USER': 'django_user',
             'PASSWORD': DJANGO_PW,
             'HOST': os.getenv('POSTGRES_SERVICE_HOST', '127.0.0.1'),

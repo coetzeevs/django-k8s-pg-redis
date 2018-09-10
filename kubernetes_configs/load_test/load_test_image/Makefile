@@ -20,4 +20,4 @@ build:
 
 .PHONY: push
 push: build
-	gcloud docker -- push eu.gcr.io/$(GCLOUD_PROJECT)/load
+	docker push eu.gcr.io/$(GCLOUD_PROJECT)/load

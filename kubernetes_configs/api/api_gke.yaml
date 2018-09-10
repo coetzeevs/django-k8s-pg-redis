@@ -24,6 +24,7 @@ spec:
     metadata:
       labels:
         name: api
+        app: api
     spec:
       containers:
       - name: api

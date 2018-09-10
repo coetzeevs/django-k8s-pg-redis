@@ -52,7 +52,7 @@ deploy:
 
 .PHONY: update
 update:
-	kubectl rolling-update frontend --image=eu.gcr.io/${GOOGLE_CLOUD_PROJECT}/api:latest
+	kubectl rolling-update frontend --image-pull-policy=IfNotPresent --image=eu.gcr.io/${GOOGLE_CLOUD_PROJECT}/api:latest
 
 .PHONY: disk
 disk:
@@ -97,3 +97,4 @@ frontend:
 delete:
 	gcloud container clusters delete api
 	gcloud compute disks delete pg-data
+
