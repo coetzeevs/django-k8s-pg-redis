@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api
@@ -24,6 +24,7 @@ spec:
     metadata:
       labels:
         name: api
+        app: api
     spec:
       containers:
       - name: api
@@ -32,7 +33,7 @@ spec:
         imagePullPolicy: IfNotPresent
        {%- endif %}
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         volumeMounts:
         {% if has_db -%}
         - name: secrets
