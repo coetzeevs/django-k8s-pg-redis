@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: eu.gcr.io/paywellcreditapi/api:v9
+        image: eu.gcr.io/paywellcreditapi/api:latest
         ports:
         - containerPort: 8080
         volumeMounts:
